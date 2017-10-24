@@ -8,6 +8,7 @@ Create and maintain your AWS Lambdas functions easily with **LAMBD**!
 
 ### Simply example
 ```javascript
+const Lambd = require('lambd');
 
 const myLambdaFunction = ({ response }) => {
   // Here your lambda code
@@ -23,16 +24,38 @@ module.exports.handler = myLambda.getHandler();
 LAMBD allows you use middlewares to add power to your lambda function.
 
 ```javascript
-const mongo = require('mongodb');
+const Lambd = require('lambd');
+const { MongoClient } = require('mongodb');
 
 const myLambdaFunction = ({ response, db }) => {
   // Here your lambda code
-  const promise = db.getCollection('users').find({}).limit(10).sort({ cAt: -1 });
-  promise.then(users => response.json({
-    ok: true,
-    users
-  }).catch(response.error);
+  db.collection('users').find({}).toArray((err, users) => {
+    if (err) {
+      return response.error(err);
+    }
+    return response.json({ ok: true, users });
+  });
 });
 
+const mongoMiddleware = (next) => (options) => {
+  const { response } = options;
+  const url = 'mongodb://localhost:27017/myproject';
+  MongoClient.connect(url, (err, db) => {
+    if (err) {
+      return response.error(err);
+    }
+    options.db = db;
+    return next();
+  });
+};
+
+// Global Middleware
+// Lambd.use(mongoMiddleware);
+
+// Lambda Middleware
+const myLambda = Lambd.create(myLambdaFunction);
+myLambda.use(mongoMiddleware);
+
+module.exports.handler = myLambda.getHandler();
 ```
 
