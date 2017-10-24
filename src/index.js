@@ -1,11 +1,13 @@
 const Lambda = require('./Lambda');
 
-const create = (fn) => {
-  return new Lambda(fn);
-};
+const middlewares = [];
+
+const create = fn => new Lambda(fn, middlewares);
+const use = middleware => middlewares.push(middleware);
 
 const Lambd = {
   create,
+  use,
 };
 
 module.exports = Lambd;

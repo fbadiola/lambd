@@ -7,5 +7,16 @@ middlewareLambda.use((next) => (options) => {
   next(options);
 });
 
+Lambd.use((next) => (options) => {
+  options.db = {
+    find: () => ([{ id: 1 }, { id: 2 }])
+  };
+  next(options);
+});
+
+const predefinedMiddleware = Lambd.create(({ response, db }) => response.json({ ok: true, users: db.find() }));
+
+
 module.exports.event = require('./event.json');
 module.exports.middlewareLambdaHandler = middlewareLambda.getHandler();
+module.exports.predefinedMiddleware = predefinedMiddleware.getHandler();

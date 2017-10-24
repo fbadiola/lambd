@@ -55,4 +55,16 @@ describe('Create Lambd', () => {
       })
       .verify(done);
   });
+
+  it('Call lambd handler with predefined middlewares', (done) => {
+    lambdaTester(middlewares.predefinedMiddleware)
+      .event(middlewares.event)
+      .expectSucceed(function(response) {
+        const data = JSON.parse(response.body);
+        expect(data.ok).to.be.a('boolean');
+        expect(data.users).to.be.an('array');
+        expect(data.users).to.have.lengthOf(2);
+      })
+      .verify(done);
+  });
 })
