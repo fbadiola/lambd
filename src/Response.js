@@ -44,7 +44,7 @@ class Response {
     this.ctx.succeed(this.data);
   }
 
-  error(error, status = 400) {
+  error(error, status = 500) {
     const message = error instanceof Error ? error.message || error.reason : error;
     this.status(status);
     this.json({ message });

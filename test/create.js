@@ -22,12 +22,23 @@ describe('Create Lambd', () => {
       .verify(done);
   });
 
-  it('Call simply lambd handler', (done) => {
-    lambdaTester(simply.handler)
+  it('Call simply lambd handler with OK', (done) => {
+    lambdaTester(simply.okLambdaHandler)
       .event(simply.event)
       .expectSucceed(function(response) {
         const data = JSON.parse(response.body);
         expect(data.ok).to.be.a('boolean');
+      })
+      .verify(done);
+  });
+
+  it('Call simply lambd handler with Error', (done) => {
+    lambdaTester(simply.errorLambdaHandler)
+      .event(simply.event)
+      .expectSucceed(function(response) {
+        const data = JSON.parse(response.body);
+        expect(data.message).to.not.be.undefined;
+        expect(response.statusCode).to.not.equal(200);
       })
       .verify(done);
   });
