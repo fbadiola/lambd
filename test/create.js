@@ -5,6 +5,7 @@ const Lambd = require('../src');
 
 const directly = require('./lambdas/directly');
 const simply = require('./lambdas/simply');
+const middlewares = require('./lambdas/middlewares');
 
 describe('Create Lambd', () => {
   it('Get lambda instance', () => {
@@ -39,6 +40,18 @@ describe('Create Lambd', () => {
         const data = JSON.parse(response.body);
         expect(data.message).to.not.be.undefined;
         expect(response.statusCode).to.not.equal(200);
+      })
+      .verify(done);
+  });
+
+  it('Call lambd handler with middlewares', (done) => {
+    lambdaTester(middlewares.middlewareLambdaHandler)
+      .event(middlewares.event)
+      .expectSucceed(function(response) {
+        const data = JSON.parse(response.body);
+        expect(data.ok).to.be.a('boolean');
+        expect(data.config).to.be.an('object');
+        expect(data.config.test).to.be.equal(true);
       })
       .verify(done);
   });
