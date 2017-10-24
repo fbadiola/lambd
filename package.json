@@ -1,0 +1,22 @@
+{
+  "name": "lambd",
+  "version": "0.0.0",
+  "description": "Lambd's coming soon!",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fbadiola/lambd.git"
+  },
+  "keywords": [
+    "lambd"
+  ],
+  "author": "Federico Badiola <fbadiola@outlook.es>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fbadiola/lambd/issues"
+  },
+  "homepage": "https://github.com/fbadiola/lambd#readme"
+}
