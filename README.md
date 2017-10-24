@@ -45,7 +45,7 @@ const mongoMiddleware = (next) => (options) => {
       return response.error(err);
     }
     options.db = db;
-    return next();
+    return next(options);
   });
 };
 
@@ -58,4 +58,3 @@ myLambda.use(mongoMiddleware);
 
 module.exports.handler = myLambda.getHandler();
 ```
-
