@@ -4,7 +4,7 @@
   "description": "Lambd's coming soon!",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/fbadiola/lambd/issues"
   },
-  "homepage": "https://github.com/fbadiola/lambd#readme"
+  "homepage": "https://github.com/fbadiola/lambd#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "lambda-tester": "^3.1.0",
+    "mocha": "^4.0.1"
+  }
 }
