@@ -7,6 +7,7 @@ const directly = require('./lambdas/directly');
 const simply = require('./lambdas/simply');
 const middlewares = require('./lambdas/middlewares');
 const headers = require('./lambdas/headers');
+const api = require('./lambdas/api');
 
 describe('Create Lambd', () => {
   it('Get lambda instance', () => {
@@ -109,6 +110,40 @@ describe('Create Lambd', () => {
         expect(data.ok).to.be.a('boolean');
         expect(response.headers.AuthKey).to.be.equal('123456');
         expect(response.headers['Lambd-Enabled']).to.be.equal('true');
+      })
+      .verify(done);
+  });
+
+  it('Call api lambds: GET', (done) => {
+    lambdaTester(api.handler)
+      .event(api.event.get)
+      .expectSucceed(function(response) {
+        const data = JSON.parse(response.body);
+        expect(response.statusCode).to.be.equal(200);
+        expect(data.ok).to.be.a('boolean');
+        expect(data.user).to.be.equal('1');
+      })
+      .verify(done);
+  });
+
+  it('Call api lambds: POST', (done) => {
+    lambdaTester(api.handler)
+      .event(api.event.post)
+      .expectSucceed(function(response) {
+        const data = JSON.parse(response.body);
+        expect(response.statusCode).to.be.equal(200);
+        expect(data.ok).to.be.a('boolean');
+      })
+      .verify(done);
+  });
+
+  it('Call api lambds: PUT doesnt exists', (done) => {
+    lambdaTester(api.handler)
+      .event(api.event.put)
+      .expectSucceed(function(response) {
+        const data = JSON.parse(response.body);
+        expect(response.statusCode).to.be.equal(404);
+        expect(data.message).to.be.an('string');
       })
       .verify(done);
   });

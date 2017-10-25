@@ -54,9 +54,10 @@ class Response {
     this.ctx.succeed(this.data);
   }
 
-  error(error, status = 500) {
+  error(error, status) {
     const message = error instanceof Error ? error.message || error.reason : error;
-    this.status(status);
+    const statusCode = status || this.data.statusCode === 200 ? 500 : this.data.statusCode;
+    this.status(statusCode);
     this.json({ message });
   }
 }

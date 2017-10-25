@@ -1,0 +1,57 @@
+{
+  "resource": "/users/1",
+  "path": "/users/1",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept-Encoding": "gzip, deflate",
+    "CloudFront-Forwarded-Proto": "https",
+    "CloudFront-Is-Desktop-Viewer": "true",
+    "CloudFront-Is-Mobile-Viewer": "false",
+    "CloudFront-Is-SmartTV-Viewer": "false",
+    "CloudFront-Is-Tablet-Viewer": "false",
+    "CloudFront-Viewer-Country": "IE",
+    "Host": "instanceId.execute-api.eu-west-1.amazonaws.com",
+    "User-Agent": "node-superagent/1.2.0",
+    "Via": "1.1 CFID.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id": "AMAZON-CFID",
+    "X-Amzn-Trace-Id": "Root=1-AMAZOn-TRACE-ID",
+    "X-Forwarded-For": "10.0.0.1, 10.0.0.2",
+    "X-Forwarded-Port": "443",
+    "X-Forwarded-Proto": "https"
+  },
+  "queryStringParameters": {
+    "sort": "name"
+  },
+  "pathParameters": {
+    "userid": "1"
+  },
+  "stageVariables": null,
+  "requestContext": {
+    "accountId": "accountId",
+    "resourceId": "resourceId",
+    "stage": "prod",
+    "requestId": "requestId",
+    "identity": {
+      "cognitoIdentityPoolId": null,
+      "accountId": null,
+      "cognitoIdentityId": null,
+      "caller": null,
+      "apiKey": null,
+      "sourceIp": "127.0.0.1",
+      "accessKey": null,
+      "cognitoAuthenticationType": null,
+      "cognitoAuthenticationProvider": null,
+      "userArn": null,
+      "userAgent": "node-superagent/1.2.0",
+      "user": null
+    },
+    "resourcePath": "/users/{userid}",
+    "httpMethod": "PUT",
+    "apiId": "apiId"
+  },
+  "body": {
+    "name": "Prueba",
+    "email": "pa@pa.com"
+  },
+  "isBase64Encoded": false
+}

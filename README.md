@@ -4,7 +4,7 @@ Create and maintain your AWS Lambdas functions easily with **LAMBD**!
 ## How to install
 ```npm i -S lambd```
 
-## How it works?
+## Getting started
 
 ### Simply example
 ```javascript
@@ -19,6 +19,50 @@ const myLambda = Lambd.create(myLambdaFunction);
 module.exports.handler = myLambda.getHandler();
 
 ```
+
+### API example
+```javascript
+const Lambd = require('lambd');
+
+const myLambda = Lambd.create(({ response }) => response.status(404).error('not found'));
+
+// Middlewares
+const authMiddleware = (next) => (options) => {
+  const { request, response } = options;
+  const { auth } = request;
+  if (auth && auth === 'esto_es_una_prueba') {
+    next(options);
+  } else {
+    response.status(403).error('not authorized');
+  }
+};
+
+const mongoMiddleware = (next) => (options) => {
+  const { response } = options;
+  const url = 'mongodb://localhost:27017/myproject';
+  MongoClient.connect(url, (err, db) => {
+    if (err) {
+      return response.error(err);
+    }
+    options.db = db;
+    return next(options);
+  });
+};
+
+myLambda.use(authMiddleware);
+myLambda.use(mongoMiddleware);
+
+// Route: /users/:userid
+const handler = myLamba
+  .get(({ request, db }) => UserService(db).findById(request.params.userid))
+  .put(({ request, db }) => UserService(db).findByIdAndUpdate(request.params.userid, request.body))
+  .delete(({ request, db }) => UserService(db).findByIdAndDelete(request.params.userid))
+  .getHandler();
+
+module.exports.handler = handler;
+
+```
+
 
 ### Advanced example
 LAMBD allows you use middlewares to add power to your lambda function.
