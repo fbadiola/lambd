@@ -1,7 +1,7 @@
 const { lambdaHOF } = require('./hof');
 
 class Lambda {
-  constructor(fn, middlewares = []) {
+  constructor(fn, { middlewares = [] }) {
     this.fn = fn;
     this.middlewares = [
       lambdaHOF

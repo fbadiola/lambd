@@ -1,6 +1,21 @@
 class Request {
   constructor (event) {
     this.event = event;
+    this.body = this.parseBody();
+  }
+
+  parseBody() {
+    let body;
+    try {
+      body = JSON.parse(this.event.body);
+    } catch (e) {
+      body = this.event.body;
+    }
+    return body;
+  }
+
+  get method() {
+    return this.event.httpMethod;
   }
 
   get query() {
@@ -15,18 +30,8 @@ class Request {
     return this.event.headers || {};
   }
 
-  get authorization() {
+  get auth() {
     return this.headers['Authorization'] || null;
-  }
-
-  get body() {
-    let body;
-    try {
-      body = JSON.parse(this.event.body);
-    } catch (e) {
-      body = this.event.body;
-    }
-    return body;
   }
 }
 
