@@ -56,5 +56,13 @@ const mongoMiddleware = (next) => (options) => {
 const myLambda = Lambd.create(myLambdaFunction);
 myLambda.use(mongoMiddleware);
 
+// Set headers to all lambdas
+// Lambd.set('MyFirstHeader', 'value');
+// Lambd.set({ 'MySecondHeader': 'value2', 'MyThirdHeader': 'value3' });
+
+// Lambda header
+myLambda.set('MyFirstHeader', 'value');
+myLambda.set({ 'MySecondHeader': 'value2', 'MyThirdHeader': 'value3' });
+
 module.exports.handler = myLambda.getHandler();
 ```
