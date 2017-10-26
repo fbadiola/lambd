@@ -7,7 +7,7 @@ class Request {
   parseBody() {
     let body;
     try {
-      body = JSON.parse(this.event.body || {});
+      body = JSON.parse(this.event.body || '{}');
     } catch (e) {
       body = this.event.body;
     }
