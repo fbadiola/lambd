@@ -1,22 +1,46 @@
 # LAMBD
-Create and maintain your AWS Lambdas functions easily with **LAMBD**!
+Create and maintain your AWS Lambdas or Google Cloud Functions functions easily with **LAMBD**!
 
 ## How to install
 ```npm i -S lambd```
 
 ## Getting started
 
-### Simply example
+### How does I select platform?
+
 ```javascript
 const Lambd = require('lambd');
+const { Platforms } = Lambd;
 
 const myLambdaFunction = ({ response }) => {
   // Here your lambda code
   response.json({ ok: true });
 });
 
-const myLambda = Lambd.create(myLambdaFunction);
-module.exports.handler = myLambda.getHandler();
+// AWS Lambdas by default:
+// Lambd.create()
+
+// Google Cloud Functions
+// Lambd.createFunctions()
+
+// Otherwise
+// You can use Platform enum object and select platform
+module.exports.myFunction = Lambd.platform(Platforms.GCLOUD).get(myLambdaFunction).getHandler();
+
+// This allows you make compatible all your lambdas between AWS and GCLOUD Functions platforms only you must change platform on code.
+
+```
+
+### Simply example
+```javascript
+const Lambd = require('lambd');
+
+const myLambdaFunction = ({ response }) => {
+  // Here your functions code
+  response.json({ ok: true });
+});
+
+module.exports.handler = Lambd.createFunctions().get(myLambdaFunction).getHandler();
 
 ```
 
@@ -24,7 +48,7 @@ module.exports.handler = myLambda.getHandler();
 ```javascript
 const Lambd = require('lambd');
 
-const myLambda = Lambd.create(({ response }) => response.status(404).error('not found'));
+const myLambda = Lambd.create();
 
 // Middlewares
 const authMiddleware = (next) => (options) => {
@@ -97,7 +121,7 @@ const mongoMiddleware = (next) => (options) => {
 // Lambd.use(mongoMiddleware);
 
 // Lambda Middleware
-const myLambda = Lambd.create(myLambdaFunction);
+const myLambda = Lambd.create();
 myLambda.use(mongoMiddleware);
 
 // Set headers to all lambdas
@@ -108,5 +132,5 @@ myLambda.use(mongoMiddleware);
 myLambda.set('MyFirstHeader', 'value');
 myLambda.set({ 'MySecondHeader': 'value2', 'MyThirdHeader': 'value3' });
 
-module.exports.handler = myLambda.getHandler();
+module.exports.handler = myLambda.get(myLambdaFunction).getHandler();
 ```

@@ -1,5 +1,5 @@
-const Response = require('../Response');
-const Request = require('../Request');
+const Response = require('./lambdaParsers/Response');
+const Request = require('./lambdaParsers/Request');
 
 const lambdaHOF = (fn) => (event, ctx) => {
   const request = new Request(event);

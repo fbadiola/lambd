@@ -1,12 +1,29 @@
-const { lambdaHOF, methodHOF } = require('./hof');
+const { lambdaHOF, methodHOF, functionsHOF } = require('./hof');
+const Platforms = require('./Platforms');
 
 class Lambda {
-  constructor(fn, { middlewares = [] }) {
+  constructor(fn, { middlewares = [], platform }) {
     this.fn = fn;
-    this.middlewares = [
-      lambdaHOF
-    ];
+    this.platform = platform;
+    this.middlewares = [];
+
+    this.use(this._getMiddlewareByPlatform(this.platform));
     this.use(middlewares);
+  }
+
+  _getMiddlewareByPlatform(_platform) {
+    const platform = _platform || this.platform;
+    let middleware;
+    switch (platform) {
+      case Platforms.GCLOUD:
+        middleware = functionsHOF;
+        break;
+      case Platforms.AWS:
+      default:
+        middleware = lambdaHOF;
+        break;
+    }
+    return middleware;
   }
 
   use(fn) {

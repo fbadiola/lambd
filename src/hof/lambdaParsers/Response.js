@@ -1,22 +1,13 @@
+const ResponseDefaultHeaders = require('../../ResponseDefaultHeaders');
+
 class Response {
-  static setDefaultHeaders(key, value) {
-    Response._defaultHeaders = Response._defaultHeaders || {};
-    if (typeof key === 'string' && typeof value === 'string') {
-      Response._defaultHeaders[key] = value;
-    } else if (typeof key === 'object' && key instanceof Object) {
-      Object.keys(key).forEach((k) => {
-        const val = key[k];
-        Response.setDefaultHeaders(k, val);
-      });
-    }
-  }
   constructor (ctx) {
     this.ctx = ctx;
     this.data = {
       statusCode: 200,
       headers: Object.assign({
         'Content-Type': 'application/json'
-      }, Response._defaultHeaders),
+      }, ResponseDefaultHeaders._defaultHeaders),
       body: ''
     };
   }
