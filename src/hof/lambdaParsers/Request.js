@@ -33,6 +33,12 @@ class Request {
   get auth() {
     return this.headers['Authorization'] || null;
   }
+
+  // TO DO: Get Pathname url
+
+  get path() {
+    return this.event.path || '/';
+  }
 }
 
 module.exports = Request;

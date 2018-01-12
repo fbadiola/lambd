@@ -35,28 +35,28 @@ class Lambda {
     return this;
   }
 
-  get(promiseFn) {
-    this.middlewares.push(methodHOF('GET', promiseFn));
+  get(path, promiseFn) {
+    this.middlewares.push(methodHOF('GET', path, promiseFn));
     return this;
   }
 
-  post(promiseFn) {
-    this.middlewares.push(methodHOF('POST', promiseFn));
+  post(path, promiseFn) {
+    this.middlewares.push(methodHOF('POST', path, promiseFn));
     return this;
   }
 
-  put(promiseFn) {
-    this.middlewares.push(methodHOF('PUT', promiseFn));
+  put(path, promiseFn) {
+    this.middlewares.push(methodHOF('PUT', path, promiseFn));
     return this;
   }
 
-  patch(promiseFn) {
-    this.middlewares.push(methodHOF('PATCH', promiseFn));
+  patch(path, promiseFn) {
+    this.middlewares.push(methodHOF('PATCH', path, promiseFn));
     return this;
   }
 
-  delete(promiseFn) {
-    this.middlewares.push(methodHOF('DELETE', promiseFn));
+  delete(path, promiseFn) {
+    this.middlewares.push(methodHOF('DELETE', path, promiseFn));
     return this;
   }
 

@@ -12,9 +12,9 @@ Create and maintain your AWS Lambdas or Google Cloud Functions functions easily 
 const Lambd = require('lambd');
 const { Platforms } = Lambd;
 
-const myLambdaFunction = ({ response }) => {
+const myLambdaFunction = ({ request, response }) => {
   // Here your lambda code
-  response.json({ ok: true });
+  response.json({ ok: true, userid: request.params.userid });
 });
 
 // AWS Lambdas by default:
@@ -25,7 +25,7 @@ const myLambdaFunction = ({ response }) => {
 
 // Otherwise
 // You can use Platform enum object and select platform
-module.exports.myFunction = Lambd.platform(Platforms.GCLOUD).get(myLambdaFunction).getHandler();
+module.exports.myFunction = Lambd.platform(Platforms.GCLOUD).get('/:userid', myLambdaFunction).getHandler();
 
 // This allows you make compatible all your lambdas between AWS and GCLOUD Functions platforms only you must change platform on code.
 
@@ -79,8 +79,8 @@ myLambda.use(mongoMiddleware);
 // Route: /users/:userid
 const handler = myLamba
   .get(({ request, db }) => UserService(db).findById(request.params.userid))
-  .put(({ request, db }) => UserService(db).findByIdAndUpdate(request.params.userid, request.body))
-  .delete(({ request, db }) => UserService(db).findByIdAndDelete(request.params.userid))
+  .put('/:userid', ({ request, db }) => UserService(db).findByIdAndUpdate(request.params.userid, request.body))
+  .delete(':userid', ({ request, db }) => UserService(db).findByIdAndDelete(request.params.userid))
   .getHandler();
 
 module.exports.handler = handler;

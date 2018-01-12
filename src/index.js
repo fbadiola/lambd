@@ -49,6 +49,7 @@ const Lambd = {
   use,
   set,
   Platforms,
+  Lambda,
 };
 
 module.exports = Lambd;

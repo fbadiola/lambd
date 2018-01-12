@@ -11,7 +11,7 @@ const api = require('./lambdas/api');
 
 describe('Create Lambd', () => {
   it('Get lambda instance', () => {
-    const myLambda = Lambd.create(console.log);
+    const myLambda = Lambd.create();
     expect(myLambda).to.be.an.instanceof(Lambd.Lambda);
   });
 

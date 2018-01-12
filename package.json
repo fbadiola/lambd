@@ -23,5 +23,9 @@
     "chai": "^4.1.2",
     "lambda-tester": "^3.1.0",
     "mocha": "^4.0.1"
+  },
+  "dependencies": {
+    "path-match": "^1.2.4",
+    "path-to-regexp": "^2.1.0"
   }
 }
