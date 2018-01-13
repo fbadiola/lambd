@@ -1,6 +1,6 @@
 {
   "name": "lambd",
-  "version": "0.2.13",
+  "version": "0.2.14",
   "description": "Lambd's coming soon!",
   "main": "src/index.js",
   "scripts": {
@@ -11,7 +11,17 @@
     "url": "git+https://github.com/fbadiola/lambd.git"
   },
   "keywords": [
-    "lambd"
+    "google",
+    "cloud",
+    "functions",
+    "lambd",
+    "aws",
+    "amazon",
+    "web",
+    "services",
+    "lambda",
+    "lambdas",
+    "api"
   ],
   "author": "Federico Badiola <fbadiola@outlook.es>",
   "license": "ISC",
