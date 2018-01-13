@@ -30,7 +30,7 @@ const methodHOF = (method, path, promiseFn, { formatMessage }) => {
                 code = error.code || code;
                 message = error.message || message;
               }
-              return response.status(code).error(formatMessage(message, code));
+              return response.status(code).error(formatMessage(message, code, error));
             });
         }
       }
