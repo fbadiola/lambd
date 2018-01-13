@@ -16,7 +16,7 @@ class Lambda {
   setFormatMessage(formatMessage) {
     if (typeof formatMessage === 'function') {
       this._formatMessage = (message, errorCode, error) => {
-        formatMessage(message, errorCode, error);
+        return formatMessage(message, errorCode, error);
       };
     } else {
       throw new TypeError('Format Message is not a function');
