@@ -1,7 +1,7 @@
 {
   "name": "lambd",
-  "version": "0.2.14",
-  "description": "Lambd's coming soon!",
+  "version": "0.2.15",
+  "description": "Create & mantain easily Google Cloud Functiosn and/or AWS Lambdas.",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha"
