@@ -24,13 +24,18 @@ const methodHOF = (method, path, promiseFn, { formatMessage }) => {
           promise
             .then(result => response.json(formatMessage(result)))
             .catch(error => {
-              let message = error;
-              let code = 500;
-              if (error) {
-                code = error.code || code;
-                message = error.message || message;
+              try {
+                let message = error;
+                let code = 500;
+                if (error) {
+                  code = error.code || code;
+                  message = error.message || message;
+                }
+                const messageFormatted = formatMessage(message, code, error);
+                return response.status(messageFormatted.code || code).json(messageFormatted);
+              } catch (e) {
+                return response.status(500).json({ error: true, message: e.message });
               }
-              return response.status(code).json(formatMessage(message, code, error));
             });
         }
       }
