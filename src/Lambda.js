@@ -21,6 +21,7 @@ class Lambda {
     } else {
       throw new TypeError('Format Message is not a function');
     }
+    return this;
   }
 
   _getMiddlewareByPlatform(_platform) {
