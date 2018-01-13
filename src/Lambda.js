@@ -7,8 +7,20 @@ class Lambda {
     this.platform = platform;
     this.middlewares = [];
 
+    this._formatMessage = data => data;
+
     this.use(this._getMiddlewareByPlatform(this.platform));
     this.use(middlewares);
+  }
+
+  setFormatMessage(formatMessage) {
+    if (typeof formatMessage === 'function') {
+      this._formatMessage = (message, errorCode) => {
+        formatMessage(message, errorCode);
+      };
+    } else {
+      throw new TypeError('Format Message is not a function');
+    }
   }
 
   _getMiddlewareByPlatform(_platform) {
@@ -35,28 +47,34 @@ class Lambda {
     return this;
   }
 
+  _getMethodOptions() {
+    return {
+      formatMessage: this._formatMessage
+    };
+  }
+
   get(path, promiseFn) {
-    this.middlewares.push(methodHOF('GET', path, promiseFn));
+    this.middlewares.push(methodHOF('GET', path, promiseFn, this._getMethodOptions()));
     return this;
   }
 
   post(path, promiseFn) {
-    this.middlewares.push(methodHOF('POST', path, promiseFn));
+    this.middlewares.push(methodHOF('POST', path, promiseFn, this._getMethodOptions()));
     return this;
   }
 
   put(path, promiseFn) {
-    this.middlewares.push(methodHOF('PUT', path, promiseFn));
+    this.middlewares.push(methodHOF('PUT', path, promiseFn, this._getMethodOptions()));
     return this;
   }
 
   patch(path, promiseFn) {
-    this.middlewares.push(methodHOF('PATCH', path, promiseFn));
+    this.middlewares.push(methodHOF('PATCH', path, promiseFn, this._getMethodOptions()));
     return this;
   }
 
   delete(path, promiseFn) {
-    this.middlewares.push(methodHOF('DELETE', path, promiseFn));
+    this.middlewares.push(methodHOF('DELETE', path, promiseFn, this._getMethodOptions()));
     return this;
   }
 

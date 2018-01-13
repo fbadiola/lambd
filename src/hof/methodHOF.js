@@ -4,7 +4,7 @@ const route = require('path-match')();
 const isPromise = (obj) => !!(obj && obj.then && obj.then.call && obj.catch && obj.catch.call);
 const isFunction = (obj) => !!obj.call;
 
-const methodHOF = (method, path, promiseFn) => {
+const methodHOF = (method, path, promiseFn, { formatMessage }) => {
   if (typeof path === 'function') {
     promiseFn = path;
     path = '*';
@@ -22,7 +22,7 @@ const methodHOF = (method, path, promiseFn) => {
         const promise = promiseFn(options);
         if (isPromise(promise)) {
           promise
-            .then(result => response.json(result))
+            .then(result => response.json(formatMessage(result)))
             .catch(error => {
               let message = error;
               let code = 500;
@@ -30,7 +30,7 @@ const methodHOF = (method, path, promiseFn) => {
                 code = error.code || code;
                 message = error.message || message;
               }
-              return response.status(code).error(message);
+              return response.status(code).error(formatMessage(message, code));
             });
         }
       }
